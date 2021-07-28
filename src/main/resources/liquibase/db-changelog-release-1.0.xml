@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	  https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="anil" id="1">
+    <createTable catalogName="belong_test_db"
+                 remarks="table for customers"
+                 schemaName="public"
+                 tableName="customer">
+        <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints nullable="false" primaryKey="true"/>
+        </column>
+        <column name="first_name" type="varchar(255)"/>
+        <column name="last_name" type="varchar(255)"/>
+        <column name="email" type="varchar(100)">
+            <constraints nullable="false" />
+        </column>
+        <column  name="creation_time" type="DATETIME" defaultValue="NOW()">
+        </column>
+    </createTable>
+    </changeSet>
+
+    <changeSet author="anil" id="2">
+        <createTable catalogName="belong_test_db"
+                     remarks="table for phone numbers"
+                     schemaName="public"
+                     tableName="phone_details">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number" type="varchar(15)">
+                <constraints nullable="false" />
+            </column>
+            <column  name="activated" type="boolean" defaultValue="false"></column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anil" id="3">
+        <sql>insert into customer(first_name, last_name, email )
+            values('Anil', 'Sharma', 'Anil.kumar.ait09@gmail.com')</sql>
+
+        <sql>insert into customer( first_name, last_name, email )
+            values('Astern', 'Wick', 'Estern.wick@gmail.com')</sql>
+
+        <sql>insert into customer( first_name, last_name, email )
+            values('Mark', 'Spencer', 'Mark.spencer@gmail.com')</sql>
+
+        <sql>insert into customer( first_name, last_name, email )
+            values( 'Rob', 'Zack', 'Rob.Zack@gmail.com')</sql>
+    </changeSet>
+
+    <changeSet author="anil" id="4">
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(1, '+919868825750')</sql>
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(1, '+919868825751')</sql>
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(1, '+61469366771')</sql>
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(2, '+61469366778')</sql>
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(2, '+61469366782')</sql>
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(3, '+61469366785')</sql>
+        <sql>insert into phone_details(customer_id, phone_number )
+            values(4, '+61469365790')</sql>
+
+
+    </changeSet>
+
+</databaseChangeLog>
+
