@@ -27,10 +27,10 @@ public class CustomerService implements ICustomerService {
         if(customerOptional.isPresent()){
             Customer customer = customerOptional.get();
             List<PhoneDetails> allPhoneDetails = customer.getPhoneDetails();
-            return allPhoneDetails.stream().map(r->r.getPhoneNumber()).collect(Collectors.toList());
+            return allPhoneDetails.stream().map(PhoneDetails::getPhoneNumber).collect(Collectors.toList());
 
         }else {
-            throw new CustomerNotFoundException("The user is not found.");
+            throw new CustomerNotFoundException("The customer is not found.");
         }
     }
 }

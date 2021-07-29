@@ -1,7 +1,5 @@
 package com.test.belong.service.impl;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 import com.test.belong.entities.PhoneDetails;
 import com.test.belong.exception.InvalidPhoneNumberException;
 import com.test.belong.repository.PhoneNumberRepository;
@@ -10,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,10 +22,11 @@ public class PhoneNumberService implements IPhoneNumberService {
     @Override
     public List<String> getAllPhoneNumbers(Pageable pageable) {
         Page<PhoneDetails> result = phoneNumberRepository.findAll(pageable);
-        return result.stream().map(r -> r.getPhoneNumber()).collect(Collectors.toList());
+        return result.stream().map(PhoneDetails::getPhoneNumber).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public void activate(String phoneNumber) {
         int result = phoneNumberRepository.activatePhoneNumber(phoneNumber);
         if (result == 0) {
